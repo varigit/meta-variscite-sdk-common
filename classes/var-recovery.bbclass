@@ -64,11 +64,11 @@
 
 require ${VAR_RECOVERY_SD_IMAGE}
 
-VAR_RECOVERY_IMAGES_TARGET_PATH ?= "/opt/images/Yocto/"
+VAR_RECOVERY_IMAGES_TARGET_PATH ?= "/opt/images/Yocto"
 
 VAR_RECOVERY_TARGET_ROOTFS_TYPE ?= "tar.zst"
 
-ROOTFS_WORKDIR = "${WORKDIR}/rootfs/${VAR_RECOVERY_IMAGES_TARGET_PATH}/"
+ROOTFS_WORKDIR = "${WORKDIR}/rootfs${VAR_RECOVERY_IMAGES_TARGET_PATH}"
 
 # Recovery image filename - defaults to Yocto standard of image class.
 VAR_RECOVERY_SD_NAME ?= "${IMAGE_BASENAME}-${MACHINE}"
