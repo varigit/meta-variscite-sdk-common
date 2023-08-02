@@ -128,13 +128,19 @@ addtask do_install_image_artifacts after do_rootfs before do_image
 
 python do_install_image_artifacts() {
     def install_dir(dir):
-        os.system(f"install -d {dir}")
+        ret = os.system(f"install -d {dir}")
+        if ret != 0:
+            bb.fatal(f"Error creating directory: {dir}")
 
     def install_image(src, dest):
-        os.system(f"install -m 0644 {src} {dest}")
+        ret = os.system(f"install -m 0644 {src} {dest}")
+        if ret != 0:
+            bb.fatal(f"Error installing image from {src} to {dest}")
 
     def symlink(src, link):
-        os.system(f"ln -s {src} {link}")
+        ret = os.system(f"ln -s {src} {link}")
+        if ret != 0:
+            bb.fatal(f"Error creating symlink from {src} to {link}")
 
     rootfs_workdir = d.getVar("ROOTFS_WORKDIR")
     deploy_dir_image = d.getVar("DEPLOY_DIR_IMAGE")
