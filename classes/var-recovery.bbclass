@@ -166,6 +166,8 @@ python do_install_image_artifacts() {
 
         subdir_flag = d.getVarFlag("VAR_RECOVERY_IMAGE_SUBDIR", artifact)
         if subdir_flag:
+            # Remove leading / so dest is always a subdirectory of rootfs_workdir
+            subdir_flag = subdir_flag.lstrip('/')
             install_dir(os.path.join(rootfs_workdir, subdir_flag))
             dest = os.path.join(rootfs_workdir, subdir_flag, dest_name)
         else:
