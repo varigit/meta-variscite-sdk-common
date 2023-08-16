@@ -88,7 +88,7 @@ IMAGE_ROOTFS_SIZE_RAW = "${@eval('int((${IMAGE_ROOTFS_MAXSIZE} / 1.3) - (${IMAGE
 IMAGE_ROOTFS_SIZE = "${@eval('${IMAGE_ROOTFS_SIZE_RAW} - (${IMAGE_ROOTFS_SIZE_RAW} % (1024*10))')}"
 
 # Install Yocto board scripts
-IMAGE_INSTALL:append = "var-install-yocto"
+IMAGE_INSTALL:append = " var-install-yocto"
 
 # Do not cache parsing ops for any recipe inheriting this class. Otherwise, Bitbake will not
 # re-run our anonymous python function meaning it cannot properly read VAR_RECOVERY_TARGET_ROOTFS
