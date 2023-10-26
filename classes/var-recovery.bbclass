@@ -112,10 +112,10 @@ python () {
     # Target is dependent on VAR_RECOVERY_DEPENDS do_build
     depstr = ""
     for image in images:
-        depstr += f" {image}:do_build"
+        depstr += f" {image}:do_deploy"
 
     # and VAR_RECOVERY_TARGET_ROOTFS do_build
-    depstr += f" {var_recovery_target_rootfs}:do_build"
+    depstr += f" {var_recovery_target_rootfs}:do_image_complete"
 
     d.appendVarFlag('do_install_image_artifacts', 'depends', depstr)
 }
