@@ -147,7 +147,7 @@ python do_install_image_artifacts() {
     target_fs_type = d.getVar("VAR_RECOVERY_TARGET_ROOTFS_TYPE")
 
     var_recovery_target_rootfs = f'{d.getVar("_RECOVERY_TARGET_ROOTFS")}-' \
-        f'{d.getVar("MACHINE")}.{target_fs_type}'
+        f'{d.getVar("MACHINE")}.rootfs.{target_fs_type}'
 
     # VAR_RECOVERY_TARGET_ROOTFS is always present in VAR_RECOVERY_IMAGES
     # TODO: Provide a way to rename in weird cases
