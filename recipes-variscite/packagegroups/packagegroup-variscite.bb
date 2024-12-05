@@ -10,6 +10,11 @@ PACKAGES = " \
 "
 
 RDEPENDS:${PN}-devel = " \
+    curl \
+    ldd \
+    quota \
+    unzip \
+    which \
     bluealsa \
     devmem2 \
     expect \
