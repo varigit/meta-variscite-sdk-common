@@ -6,6 +6,7 @@ inherit packagegroup
 
 PACKAGES = " \
     ${PN}-devel \
+    ${PN}-swupdate \
 "
 
 RDEPENDS:${PN}-devel = " \
@@ -36,4 +37,9 @@ RDEPENDS:${PN}-devel = " \
 # Only for DRM enabled machines
 RDEPENDS:${PN}-devel:append:imxdrm = " \
     libdrm-tests \
+"
+
+RDEPENDS:${PN}-swupdate = "\
+    swupdate \
+    swupdate-www \
 "
