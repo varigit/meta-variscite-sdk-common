@@ -38,7 +38,7 @@
 #     be installed in the recovery SD card image (files produced by
 #     VAR_RECOVERY_DEPENDS recipes). Internally, the VAR_RECOVERY_TARGET_ROOTFS
 #     image file is always on this list and a sym link
-#     rootfs.<VAR_RECOVERY_TARGET_ROOTFS_TYPE> pointing to this image is
+#     rootfs.{VAR_RECOVERY_TARGET_ROOTFS_TYPES} pointing to this image is
 #     installed as well.
 #
 # VAR_RECOVERY_IMAGE_RENAME[<VAR_RECOVERY_IMAGE>]: Flag which allows for
@@ -57,16 +57,17 @@
 #      size of the recovery image rootfs. If unset, this defaults to 7,598,080
 #      (this default value was chosen to target SD cards of size 8 GB).
 #
-# VAR_RECOVERY_TARGET_ROOTFS_TYPE: Target compressed rootfs tarball format
-#     which should match at least one of the formats specified in IMAGE_FSTYPES
-#     of the VAR_RECOVERY_TARGET_ROOTFS image.
+# VAR_RECOVERY_TARGET_ROOTFS_TYPES: Whitespace separated list of rootfs
+#     fomats to be installed. This defaults to ".tar.zst" which is the default
+#     format for eMMC, but can be extended to include "_128kbpeb.ubi" or
+#     "_256kbped.ubi" to support UBI NAND formats as well.
 #
 
 require ${VAR_RECOVERY_SD_IMAGE}
 
 VAR_RECOVERY_IMAGES_TARGET_PATH ?= "/opt/images/Yocto"
 
-VAR_RECOVERY_TARGET_ROOTFS_TYPE ?= "tar.zst"
+VAR_RECOVERY_TARGET_ROOTFS_TYPES ?= ".tar.zst"
 
 ROOTFS_WORKDIR = "${WORKDIR}/rootfs${VAR_RECOVERY_IMAGES_TARGET_PATH}"
 
@@ -122,7 +123,7 @@ python () {
 
 do_install_image_artifacts[cleandirs] = "${ROOTFS_WORKDIR}"
 do_install_image_artifacts[doc] = "Install artifacts to be installed by Yocto recovery image"
-do_install_image_artifacts[vardeps] = "VAR_RECOVERY_TARGET_ROOTFS VAR_RECOVERY_TARGET_ROOTFS_TYPE \
+do_install_image_artifacts[vardeps] = "VAR_RECOVERY_TARGET_ROOTFS VAR_RECOVERY_TARGET_ROOTFS_TYPES \
     VAR_RECOVERY_IMAGES_TARGET_PATH VAR_RECOVERY_IMAGE_RENAME VAR_RECOVERY_IMAGE_SUBDIR"
 addtask do_install_image_artifacts after do_rootfs before do_image
 
@@ -144,14 +145,17 @@ python do_install_image_artifacts() {
 
     rootfs_workdir = d.getVar("ROOTFS_WORKDIR")
     deploy_dir_image = d.getVar("DEPLOY_DIR_IMAGE")
-    target_fs_type = d.getVar("VAR_RECOVERY_TARGET_ROOTFS_TYPE")
+    target_fs_types = d.getVar("VAR_RECOVERY_TARGET_ROOTFS_TYPES")
 
-    var_recovery_target_rootfs = f'{d.getVar("_RECOVERY_TARGET_ROOTFS")}-' \
-        f'{d.getVar("MACHINE")}.rootfs.{target_fs_type}'
+    for suffix in target_fs_types.split():
+        var_recovery_target_rootfs = f'{d.getVar("_RECOVERY_TARGET_ROOTFS")}-' \
+            f'{d.getVar("MACHINE")}.rootfs{suffix}'
 
-    # VAR_RECOVERY_TARGET_ROOTFS is always present in VAR_RECOVERY_IMAGES
-    # TODO: Provide a way to rename in weird cases
-    d.appendVar("VAR_RECOVERY_IMAGES", var_recovery_target_rootfs)
+        # VAR_RECOVERY_TARGET_ROOTFS is always present in VAR_RECOVERY_IMAGES
+        # TODO: Provide a way to rename in weird cases
+        d.appendVar("VAR_RECOVERY_IMAGES", " " + var_recovery_target_rootfs)
+
+        symlink(var_recovery_target_rootfs, os.path.join(rootfs_workdir, f"rootfs{suffix}"))
 
     var_recovery_images = d.getVar('VAR_RECOVERY_IMAGES').split()
 
@@ -175,6 +179,4 @@ python do_install_image_artifacts() {
 
         src = os.path.join(deploy_dir_image, artifact)
         install_image(src, dest)
-
-    symlink(var_recovery_target_rootfs, os.path.join(rootfs_workdir, f"rootfs.{target_fs_type}"))
 }
