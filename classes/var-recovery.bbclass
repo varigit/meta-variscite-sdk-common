@@ -67,7 +67,7 @@ require ${VAR_RECOVERY_SD_IMAGE}
 
 VAR_RECOVERY_IMAGES_TARGET_PATH ?= "/opt/images/Yocto"
 
-VAR_RECOVERY_TARGET_ROOTFS_TYPES ?= ".tar.zst"
+VAR_RECOVERY_TARGET_ROOTFS_TYPES ?= ".tar.zst ${@bb.utils.contains('MACHINE_FEATURES', 'nand-flash', '_128kbpeb.ubi _256kbpeb.ubi', '', d)}"
 
 ROOTFS_WORKDIR = "${WORKDIR}/rootfs${VAR_RECOVERY_IMAGES_TARGET_PATH}"
 
