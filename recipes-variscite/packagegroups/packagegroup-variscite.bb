@@ -28,7 +28,6 @@ RDEPENDS:${PN}-devel = " \
     libgpiod \
     libgpiod-tools \
     libgpiodcxx \
-    nodejs \
     openssh-sftp-server \
     rng-tools \
     screen \
