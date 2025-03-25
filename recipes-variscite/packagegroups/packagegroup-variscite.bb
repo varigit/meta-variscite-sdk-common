@@ -33,6 +33,7 @@ RDEPENDS:${PN}-devel = " \
     screen \
     sudo \
     tcf-agent \
+    python3-pip \
     var-mii \
     wpa-supplicant \
     wireless-regdb-static \
