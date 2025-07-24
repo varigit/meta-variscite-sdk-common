@@ -8,7 +8,7 @@ SPLASH_IMAGES = "file://psplash-poky.png;outsuffix=default"
 CFLAGS:append = " -DPSPLASH_DISABLE_STARTUP_MSG"
 
 do_configure:prepend() {
-	cp ${WORKDIR}/*.png ${S}/base-images
+	cp ${UNPACKDIR}/*.png ${S}/base-images
 }
 
 INITSCRIPT_PARAMS = "start 0 S . stop 21 0 1 6 ."
