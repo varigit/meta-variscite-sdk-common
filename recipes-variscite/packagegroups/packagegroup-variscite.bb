@@ -19,6 +19,7 @@ RDEPENDS:${PN}-devel = " \
     devmem2 \
     expect \
     gptfdisk \
+    grep \
     hostapd \
     hdparm \
     iperf3 \
