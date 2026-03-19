@@ -25,4 +25,4 @@ FILES:${PN} = "\
     ${systemd_unitdir}/system/var-fw-env-autofix.service \
 "
 
-COMPATIBLE_MACHINE = "(mx8-nxp-bsp|mx9-nxp-bsp)"
+COMPATIBLE_MACHINE = "(mx8-nxp-bsp|mx9-nxp-bsp|am62x-var-som|am62px-var-som)"
