@@ -1,0 +1,13 @@
+[Unit]
+Description=Resize partition on first boot
+After=local-fs.target
+DefaultDependencies=no
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/var-expand-partition.sh
+ExecStartPost=systemctl disable var-expand-partition.service
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target
