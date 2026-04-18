@@ -6,7 +6,7 @@ ConditionPathExists=!/var/lib/fw-env-autofix.done
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/var-fw-env-autofix.sh
-ExecStartPost=/bin/systemctl disable --now var-fw-env-autofix.service
+ExecStartPost=systemctl disable var-fw-env-autofix.service
 RemainAfterExit=yes
 
 [Install]
