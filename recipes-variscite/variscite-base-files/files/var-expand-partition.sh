@@ -11,8 +11,8 @@ case "$ROOT_PART" in
         PART_NUM=${ROOT_PART##*p}
         ;;
     *)
-        echo "Unsupported root device format: $ROOT_PART"
-        exit 1
+        echo "Skipping partition resize for root device: $ROOT_PART"
+        exit 0
         ;;
 esac
 
