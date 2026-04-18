@@ -37,4 +37,4 @@ RDEPENDS:${PN} = "\
     parted \
 "
 
-COMPATIBLE_MACHINE = "(mx8-nxp-bsp|mx9-nxp-bsp|am62x-var-som|am62px-var-som)"
+COMPATIBLE_MACHINE = "(mx6-nxp-bsp|mx7-nxp-bsp|mx8-nxp-bsp|mx9-nxp-bsp|am62x-var-som|am62px-var-som)"
