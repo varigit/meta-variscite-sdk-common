@@ -5,11 +5,11 @@ SECTION = "bootloader"
 
 SRC_URI = "file://splash.bmp"
 
-S = "${WORKDIR}"
+S = "${UNPACKDIR}"
 
 FILES:${PN} = "/boot/splash.bmp"
 
 do_install () {
 	install -d ${D}/boot
-	install -m 644 splash.bmp ${D}/boot/splash.bmp
+	install -m 644 ${S}/splash.bmp ${D}/boot/splash.bmp
 }

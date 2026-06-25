@@ -9,7 +9,7 @@ SRC_URI = "\
     file://var-fw-env-autofix.service \
 "
 
-S = "${WORKDIR}"
+S = "${UNPACKDIR}"
 
 inherit systemd
 
